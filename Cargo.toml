@@ -1,0 +1,4 @@
+[package]
+name = "push_swap-dp-rs"
+publish = false
+version = "0.1.0"
