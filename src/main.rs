@@ -9,7 +9,6 @@ macro_rules! generate_enum_variants {
 
 generate_enum_variants!(TSTStrategy, QS, QER, QLR, MS, MER, MLR);
 generate_enum_variants!(TSBStrategy, QS, QR, M);
-generate_enum_variants!(TXTStrategy, QS, QT, MS, MT);
 generate_enum_variants!(TXBStrategy, QS, QT, MS, MT);
 generate_enum_variants!(TOTStrategy, QS, QR, MS, MR);
 generate_enum_variants!(TOSStrategy, QS, QTU, QTD, QRU, QRD, M);
@@ -21,7 +20,6 @@ generate_enum_variants!(SOBStrategy, Q, MS, MTU, MTD, MRU, MRD);
 generate_enum_variants!(BSTStrategy, Q, MS, MR);
 generate_enum_variants!(BSBStrategy, Q, M);
 generate_enum_variants!(BXTStrategy, QS, QT, MS, MT);
-generate_enum_variants!(BXBStrategy, QS, QT, MS, MT);
 generate_enum_variants!(BOTStrategy, Q, MS, MR);
 generate_enum_variants!(BOSStrategy, QS, QTU, QTD, QRU, QRD, M);
 generate_enum_variants!(BOBStrategy, Q, M);
@@ -37,10 +35,6 @@ struct Row {
     tsb_qs: usize,
     tsb_qr: usize,
     tsb_m: usize,
-    txt_qs: usize,
-    txt_qt: usize,
-    txt_ms: usize,
-    txt_mt: usize,
     txb_qs: usize,
     txb_qt: usize,
     txb_ms: usize,
@@ -85,10 +79,6 @@ struct Row {
     bxt_qt: usize,
     bxt_ms: usize,
     bxt_mt: usize,
-    bxb_qs: usize,
-    bxb_qt: usize,
-    bxb_ms: usize,
-    bxb_mt: usize,
     bot_q: usize,
     bot_ms: usize,
     bot_mr: usize,
@@ -102,7 +92,6 @@ struct Row {
     bob_m: usize,
     tst: (usize, TSTStrategy, usize, usize, usize),
     tsb: (usize, TSBStrategy, usize, usize, usize),
-    txt: (usize, TXTStrategy, usize, usize, usize),
     txb: (usize, TXBStrategy, usize, usize, usize),
     tot: (usize, TOTStrategy, usize, usize, usize),
     tos: (usize, TOSStrategy, usize, usize, usize),
@@ -114,7 +103,6 @@ struct Row {
     bst: (usize, BSTStrategy, usize, usize, usize),
     bsb: (usize, BSBStrategy, usize, usize, usize),
     bxt: (usize, BXTStrategy, usize, usize, usize),
-    bxb: (usize, BXBStrategy, usize, usize, usize),
     bot: (usize, BOTStrategy, usize, usize, usize),
     bos: (usize, BOSStrategy, usize, usize, usize),
     bob: (usize, BOBStrategy, usize, usize, usize),
@@ -122,7 +110,6 @@ struct Row {
 
 const TST: [usize; 10] = [0, 1, 3, 6, 9, 13, 16, 20, 24, 27];
 const TSB: [usize; 10] = [0, 0, 1, 5, 9, 12, 15, 18, 21, 24];
-const TXT: [usize; 10] = [0, 0, 1, 5, 9, 11, 14, 17, 20, 23];
 const TXB: [usize; 10] = [0, 1, 3, 6, 9, 13, 16, 19, 22, 26];
 const TOT: [usize; 10] = [0, 1, 3, 6, 8, 10, 13, 16, 19, 21];
 const TOS: [usize; 10] = [0, 1, 3, 5, 7, 9, 11, 13, 16, 18];
@@ -134,7 +121,6 @@ const SOB: [usize; 10] = [0, 2, 4, 7, 9, 12, 14, 17, 20, 22];
 const BST: [usize; 10] = [0, 1, 3, 6, 9, 13, 16, 20, 24, 27];
 const BSB: [usize; 10] = [0, 0, 5, 9, 13, 17, 21, 25, 29, 33];
 const BXT: [usize; 10] = [0, 1, 3, 6, 9, 13, 16, 19, 22, 26];
-const BXB: [usize; 10] = [0, 0, 5, 9, 13, 17, 21, 25, 29, 33];
 const BOT: [usize; 10] = [0, 2, 4, 7, 9, 13, 16, 19, 23, 26];
 const BOS: [usize; 10] = [0, 2, 4, 7, 9, 12, 14, 17, 20, 22];
 const BOB: [usize; 10] = [0, 3, 6, 9, 12, 15, 18, 22, 25, 29];
@@ -150,10 +136,6 @@ const fn initial_row(index: usize) -> Row {
         tsb_qs: TSB[index],
         tsb_qr: TSB[index],
         tsb_m: TSB[index],
-        txt_qs: TXT[index],
-        txt_qt: TXT[index],
-        txt_ms: TXT[index],
-        txt_mt: TXT[index],
         txb_qs: TXB[index],
         txb_qt: TXB[index],
         txb_ms: TXB[index],
@@ -198,10 +180,6 @@ const fn initial_row(index: usize) -> Row {
         bxt_qt: BXT[index],
         bxt_ms: BXT[index],
         bxt_mt: BXT[index],
-        bxb_qs: BXB[index],
-        bxb_qt: BXB[index],
-        bxb_ms: BXB[index],
-        bxb_mt: BXB[index],
         bot_q: BOT[index],
         bot_ms: BOT[index],
         bot_mr: BOT[index],
@@ -215,7 +193,6 @@ const fn initial_row(index: usize) -> Row {
         bob_m: BOB[index],
         tst: (0, TSTStrategy::MS, 0, 0, 0),
         tsb: (0, TSBStrategy::M, 0, 0, 0),
-        txt: (0, TXTStrategy::MS, 0, 0, 0),
         txb: (0, TXBStrategy::MS, 0, 0, 0),
         tot: (0, TOTStrategy::MS, 0, 0, 0),
         tos: (0, TOSStrategy::M, 0, 0, 0),
@@ -227,7 +204,6 @@ const fn initial_row(index: usize) -> Row {
         bst: (0, BSTStrategy::MS, 0, 0, 0),
         bsb: (0, BSBStrategy::M, 0, 0, 0),
         bxt: (0, BXTStrategy::MS, 0, 0, 0),
-        bxb: (0, BXBStrategy::MS, 0, 0, 0),
         bot: (0, BOTStrategy::MS, 0, 0, 0),
         bos: (0, BOSStrategy::M, 0, 0, 0),
         bob: (0, BOBStrategy::M, 0, 0, 0),
@@ -320,9 +296,6 @@ const fn tst(r: &Row) -> usize {
 const fn tsb(r: &Row) -> usize {
     min!(r.tsb_qs, r.tsb_qr, r.tsb_m)
 }
-const fn txt(r: &Row) -> usize {
-    min!(r.txt_qs, r.txt_qt, r.txt_ms, r.txt_mt)
-}
 const fn txb(r: &Row) -> usize {
     min!(r.txb_qs, r.txb_qt, r.txb_ms, r.txb_mt)
 }
@@ -338,9 +311,6 @@ const fn tob(r: &Row) -> usize {
 const fn sss(r: &Row) -> usize {
     min!(r.sss_q, r.sss_m)
 }
-const fn sxs(r: &Row) -> usize {
-    min!(r.sxs_qs, r.sxs_qt, r.sxs_ms, r.sxs_mt)
-}
 const fn sot(r: &Row) -> usize {
     min!(r.sot_q, r.sot_ms, r.sot_mtu, r.sot_mtd, r.sot_mru, r.sot_mrd)
 }
@@ -355,9 +325,6 @@ const fn bsb(r: &Row) -> usize {
 }
 const fn bxt(r: &Row) -> usize {
     min!(r.bxt_qs, r.bxt_qt, r.bxt_ms, r.bxt_mt)
-}
-const fn bxb(r: &Row) -> usize {
-    min!(r.bxb_qs, r.bxb_qt, r.bxb_ms, r.bxb_mt)
 }
 const fn bot(r: &Row) -> usize {
     min!(r.bot_q, r.bot_ms, r.bot_mr)
@@ -403,18 +370,6 @@ fn tsb_qr(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
 }
 fn tsb_m(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
     tob(&table[x]) + tot(&table[y]) + tst(&table[z]) + bbts(x, y, z)
-}
-fn txt_qs(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    tsbt(x, y, z) + tot(&table[z]) + sot(&table[y]) + bxt(&table[x])
-}
-fn txt_qt(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    tstb(x, y, z) + bot(&table[z]) + sot(&table[y]) + bxt(&table[x])
-}
-fn txt_ms(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    txb(&table[x]) + tos(&table[y]) + tot(&table[z]) + tsbt(x, y, z)
-}
-fn txt_mt(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    txb(&table[x]) + tos(&table[y]) + tob(&table[z]) + tstb(x, y, z)
 }
 fn txb_qs(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
     tstb(x, y, z) + bsb(&table[x]) + tob(&table[y]) + sob(&table[z])
@@ -548,18 +503,6 @@ fn bxt_ms(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
 fn bxt_mt(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
     bos(&table[x]) + bob(&table[y]) + bsb(&table[z]) + ttbs(x, y, z)
 }
-fn bxb_qs(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    bstb(x, y, z) + tsb(&table[x]) + tob(&table[y]) + sob(&table[z])
-}
-fn bxb_qt(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    bsbt(x, y, z) + tsb(&table[x]) + bob(&table[y]) + sob(&table[z])
-}
-fn bxb_ms(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    bxt(&table[x]) + bos(&table[y]) + bob(&table[z]) + bstb(x, y, z)
-}
-fn bxb_mt(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
-    bxt(&table[x]) + bos(&table[y]) + bot(&table[z]) + bsbt(x, y, z)
-}
 fn bot_q(table: &Vec<Row>, x: usize, y: usize, z: usize) -> usize {
     bsbt(x, y, z) + tst(&table[z]) + bst(&table[y]) + tot(&table[x])
 }
@@ -605,7 +548,7 @@ fn min(to: &mut usize, value: usize) -> bool {
 
 fn main() {
     let mut table = INITIAL_ROWS.to_vec();
-    println!("#\ttst.c\ttst.s\ttst.x\ttst.y\ttst.z\ttsb.c\ttsb.s\ttsb.x\ttsb.y\ttsb.z\ttxt.c\ttxt.s\ttxt.x\ttxt.y\ttxt.z\ttxb.c\ttxb.s\ttxb.x\ttxb.y\ttxb.z\ttot.c\ttot.s\ttot.x\ttot.y\ttot.z\ttos.c\ttos.s\ttos.x\ttos.y\ttos.z\ttob.c\ttob.s\ttob.x\ttob.y\ttob.z\tsss.c\tsss.s\tsss.x\tsss.y\tsss.z\tsxs.c\tsxs.s\tsxs.x\tsxs.y\tsxs.z\tsot.c\tsot.s\tsot.x\tsot.y\tsot.z\tsob.c\tsob.s\tsob.x\tsob.y\tsob.z\tbst.c\tbst.s\tbst.x\tbst.y\tbst.z\tbsb.c\tbsb.s\tbsb.x\tbsb.y\tbsb.z\tbxt.c\tbxt.s\tbxt.x\tbxt.y\tbxt.z\tbxb.c\tbxb.s\tbxb.x\tbxb.y\tbxb.z\tbot.c\tbot.s\tbot.x\tbot.y\tbot.z\tbos.c\tbos.s\tbos.x\tbos.y\tbos.z\tbob.c\tbob.s\tbob.x\tbob.y\tbob.z");
+    println!("#\ttst.c\ttst.s\ttst.x\ttst.y\ttst.z\ttsb.c\ttsb.s\ttsb.x\ttsb.y\ttsb.z\ttxb.c\ttxb.s\ttxb.x\ttxb.y\ttxb.z\ttot.c\ttot.s\ttot.x\ttot.y\ttot.z\ttos.c\ttos.s\ttos.x\ttos.y\ttos.z\ttob.c\ttob.s\ttob.x\ttob.y\ttob.z\tsss.c\tsss.s\tsss.x\tsss.y\tsss.z\tsxs.c\tsxs.s\tsxs.x\tsxs.y\tsxs.z\tsot.c\tsot.s\tsot.x\tsot.y\tsot.z\tsob.c\tsob.s\tsob.x\tsob.y\tsob.z\tbst.c\tbst.s\tbst.x\tbst.y\tbst.z\tbsb.c\tbsb.s\tbsb.x\tbsb.y\tbsb.z\tbxt.c\tbxt.s\tbxt.x\tbxt.y\tbxt.z\tbot.c\tbot.s\tbot.x\tbot.y\tbot.z\tbos.c\tbos.s\tbos.x\tbos.y\tbos.z\tbob.c\tbob.s\tbob.x\tbob.y\tbob.z");
     loop {
         let current = table.len();
         let mut row = Row {
@@ -618,10 +561,6 @@ fn main() {
             tsb_qs: usize::MAX,
             tsb_qr: usize::MAX,
             tsb_m: usize::MAX,
-            txt_qs: usize::MAX,
-            txt_qt: usize::MAX,
-            txt_ms: usize::MAX,
-            txt_mt: usize::MAX,
             txb_qs: usize::MAX,
             txb_qt: usize::MAX,
             txb_ms: usize::MAX,
@@ -666,10 +605,6 @@ fn main() {
             bxt_qt: usize::MAX,
             bxt_ms: usize::MAX,
             bxt_mt: usize::MAX,
-            bxb_qs: usize::MAX,
-            bxb_qt: usize::MAX,
-            bxb_ms: usize::MAX,
-            bxb_mt: usize::MAX,
             bot_q: usize::MAX,
             bot_ms: usize::MAX,
             bot_mr: usize::MAX,
@@ -683,7 +618,6 @@ fn main() {
             bob_m: usize::MAX,
             tst: (0, TSTStrategy::MS, 0, 0, 0),
             tsb: (0, TSBStrategy::M, 0, 0, 0),
-            txt: (0, TXTStrategy::MS, 0, 0, 0),
             txb: (0, TXBStrategy::MS, 0, 0, 0),
             tot: (0, TOTStrategy::MS, 0, 0, 0),
             tos: (0, TOSStrategy::M, 0, 0, 0),
@@ -695,7 +629,6 @@ fn main() {
             bst: (0, BSTStrategy::MS, 0, 0, 0),
             bsb: (0, BSBStrategy::M, 0, 0, 0),
             bxt: (0, BXTStrategy::MS, 0, 0, 0),
-            bxb: (0, BXBStrategy::MS, 0, 0, 0),
             bot: (0, BOTStrategy::MS, 0, 0, 0),
             bos: (0, BOSStrategy::M, 0, 0, 0),
             bob: (0, BOBStrategy::M, 0, 0, 0),
@@ -732,18 +665,6 @@ fn main() {
                 }
                 if min(&mut row.tsb_m, tsb_m(&table, x, y, z)) {
                     row.tsb = (row.tsb_m, TSBStrategy::M, x, y, z);
-                }
-                if min(&mut row.txt_qs, txt_qs(&table, x, y, z)) {
-                    row.txt = (row.txt_qs, TXTStrategy::QS, x, y, z);
-                }
-                if min(&mut row.txt_qt, txt_qt(&table, x, y, z)) {
-                    row.txt = (row.txt_qt, TXTStrategy::QT, x, y, z);
-                }
-                if min(&mut row.txt_ms, txt_ms(&table, x, y, z)) {
-                    row.txt = (row.txt_ms, TXTStrategy::MS, x, y, z);
-                }
-                if min(&mut row.txt_mt, txt_mt(&table, x, y, z)) {
-                    row.txt = (row.txt_mt, TXTStrategy::MT, x, y, z);
                 }
                 if min(&mut row.txb_qs, txb_qs(&table, x, y, z)) {
                     row.txb = (row.txb_qs, TXBStrategy::QS, x, y, z);
@@ -877,18 +798,6 @@ fn main() {
                 if min(&mut row.bxt_mt, bxt_mt(&table, x, y, z)) {
                     row.bxt = (row.bxt_mt, BXTStrategy::MT, x, y, z);
                 }
-                if min(&mut row.bxb_qs, bxb_qs(&table, x, y, z)) {
-                    row.bxb = (row.bxb_qs, BXBStrategy::QS, x, y, z);
-                }
-                if min(&mut row.bxb_qt, bxb_qt(&table, x, y, z)) {
-                    row.bxb = (row.bxb_qt, BXBStrategy::QT, x, y, z);
-                }
-                if min(&mut row.bxb_ms, bxb_ms(&table, x, y, z)) {
-                    row.bxb = (row.bxb_ms, BXBStrategy::MS, x, y, z);
-                }
-                if min(&mut row.bxb_mt, bxb_mt(&table, x, y, z)) {
-                    row.bxb = (row.bxb_mt, BXBStrategy::MT, x, y, z);
-                }
                 if min(&mut row.bot_q, bot_q(&table, x, y, z)) {
                     row.bot = (row.bot_q, BOTStrategy::Q, x, y, z);
                 }
@@ -925,11 +834,10 @@ fn main() {
             }
         }
         // println!("{}: {:?}", current, row);
-        println!("{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}",
+        println!("{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}\t{}\t{:?}\t{}\t{}\t{}",
             current,
             row.tst.0, row.tst.1, row.tst.2, row.tst.3, row.tst.4,
             row.tsb.0, row.tsb.1, row.tsb.2, row.tsb.3, row.tsb.4,
-            row.txt.0, row.txt.1, row.txt.2, row.txt.3, row.txt.4,
             row.txb.0, row.txb.1, row.txb.2, row.txb.3, row.txb.4,
             row.tot.0, row.tot.1, row.tot.2, row.tot.3, row.tot.4,
             row.tos.0, row.tos.1, row.tos.2, row.tos.3, row.tos.4,
@@ -941,7 +849,6 @@ fn main() {
             row.bst.0, row.bst.1, row.bst.2, row.bst.3, row.bst.4,
             row.bsb.0, row.bsb.1, row.bsb.2, row.bsb.3, row.bsb.4,
             row.bxt.0, row.bxt.1, row.bxt.2, row.bxt.3, row.bxt.4,
-            row.bxb.0, row.bxb.1, row.bxb.2, row.bxb.3, row.bxb.4,
             row.bot.0, row.bot.1, row.bot.2, row.bot.3, row.bot.4,
             row.bos.0, row.bos.1, row.bos.2, row.bos.3, row.bos.4,
             row.bob.0, row.bob.1, row.bob.2, row.bob.3, row.bob.4,
